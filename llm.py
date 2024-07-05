@@ -27,6 +27,11 @@ class Llm:
         if generations and generations[0] and generations[0][0].text:
             return generations[0][0].text
         return ""
+      
+    def log_error(self, error: str):
+        self._audio.playAudioOutputLanguage(error)
+        self._logging.logError(error)
+      
 
     def processResponse(self, prompt: str) -> str:
         prompt = prompt.strip()
@@ -55,12 +60,11 @@ class Llm:
                 example = parsed_content.get("example", "")
 
                 if translation:
-                    self._audio.playAudio(translation)
+                    self._audio.playAudioOutputLanguage(translation)
                     self._data.addTranslation(prompText, translation, gender, root, example)
                 else:
-                    print("Translation not found in the response.")
+                    self.log_error("Translation not found in the response.")
             except json.JSONDecodeError:
-                print("Failed to parse the response as JSON.")
                 # Fallback: try to extract content between curly braces
                 start = llmResponse.find("{")
                 end = llmResponse.rfind("}")
@@ -74,18 +78,18 @@ class Llm:
                         root = parsed_content.get("root", "")
                         example = parsed_content.get("example", "")
                         if translation:
-                            self._audio.playAudio(translation)
+                            self._audio.playAudioOutputLanguage(translation)
                             self._data.addTranslation(prompText, translation, gender, root, example)
                         else:
-                            print("Translation not found in the extracted JSON.")
+                            self.log_error("Translation not found in the extracted content.")
                     except json.JSONDecodeError:
-                        print("Failed to parse the extracted content as JSON.")
+                        self.log_error("Failed to parse the extracted content as JSON.")
                 else:
-                    print("No valid JSON object found in the response.")
+                    self.log_error("Failed to extract content between curly braces.")
 
             print("")
 
         except Exception as e:
-            self._logging.logError(f"Error during LLM response: {e}")
+            self.log_error(f"Error during LLM processing: {e}")
 
         return llmResponse

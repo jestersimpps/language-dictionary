@@ -24,5 +24,5 @@ class Data:
         if self.logLevel == 0:
             print(f"App state changed to {state}")
             
-    def addTranslation(self, english: str, chinese: str, pinyin: str, notes: str):
-        self._gsheet.add_translation(english, chinese, pinyin, notes)
+    def addTranslation(self, prompt, translation, gender, root, example):
+        self._gsheet.add_translation(prompt, translation, gender, root, example)

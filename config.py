@@ -22,6 +22,14 @@ class Config:
         }}
 
         {{
+        "prompt": "Trennung!",
+        "translation": "Separation!",
+        "gender": "null, as it is not an noun but an exclamation.",
+        "root": "null, similar reasoning for the root.",
+        "example": "Expressing sudden or emotional separation in English."
+        }}
+        
+        {{
         "prompt": "laufen",
         "translation": "to run, to walk",
         "root": "From Middle High German 'loufen', from Old High German 'loufan'",
@@ -47,8 +55,10 @@ class Config:
       return INSTRUCTIONS
   
   # TTS
-  LOCAL_TTS_VOICE="com.apple.speech.synthesis.voice.anna.premium"
-  LOCAL_TTS_RATE=180
+  LOCAL_TTS_VOICE_INPUT_LANGUAGE="com.apple.speech.synthesis.voice.anna.premium"
+  LOCAL_TTS_RATE_INPUT_LANGUAGE=180
+  LOCAL_TTS_VOICE_OUTPUT_LANGUAGE="com.apple.speech.synthesis.voice.joelle"
+  LOCAL_TTS_RATE_OUTPUT_LANGUAGE=180
 
   # LLM
   LOCAL_OLLAMA_LLM = "phi3"

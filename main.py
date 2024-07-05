@@ -27,7 +27,7 @@ class Main:
         self._logging = logging
         # Log info
         self._logging.logInfo(f"Press the Escape key to start recording")
-        self._audio.playAudio(self._config.WELCOME_MESSAGE)
+        self._audio.playAudioInputLanguage(self._config.WELCOME_MESSAGE)
 
     def _onEscPress(self, event):
         if event.name == "esc" or event.name == "escape":

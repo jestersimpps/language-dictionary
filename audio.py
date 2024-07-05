@@ -73,8 +73,14 @@ class Audio:
         finally:
             os.remove(tempFilePath)
 
-    def playAudio(self, text):
+    def playAudioInputLanguage(self, text):
         os.system(
-            f"say -v {self._config.LOCAL_TTS_VOICE} -r {self._config.LOCAL_TTS_RATE} "
+            f"say -v {self._config.LOCAL_TTS_VOICE_INPUT_LANGUAGE} -r {self._config.LOCAL_TTS_RATE_INPUT_LANGUAGE} "
+            + (text)
+        )
+        
+    def playAudioOutputLanguage(self, text):
+        os.system(
+            f"say -v {self._config.LOCAL_TTS_VOICE_OUTPUT_LANGUAGE} -r {self._config.LOCAL_TTS_RATE_OUTPUT_LANGUAGE} "
             + (text)
         )
