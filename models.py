@@ -1,0 +1,16 @@
+
+class Entity:
+    USER = 'user'
+    LLM = 'assistant'
+
+
+class AppState:
+    WAITING_FOR_INPUT = 'WAITING_FOR_INPUT'
+    RECORDING_INPUT = 'RECORDING_INPUT'
+    PROCESSING_INPUT = 'PROCESSING_INPUT'
+    GENERATING_OUTPUT = 'GENERATING_OUTPUT'
+    PLAYING_OUTPUT = 'PLAYING_OUTPUT'
+    
+class LogLevel:
+    DEBUG = 0
+    INFO = 1
