@@ -34,7 +34,7 @@ class Main:
         if event.name == "esc" or event.name == "escape":
             if self._data.appState == AppState.WAITING_FOR_INPUT:
                 self._data.changeAppState(AppState.RECORDING_INPUT)
-                self._logging.logInfo("Recording started. Press the Caps Lock key to stop.")
+                self._logging.logInfo("Recording started. Press the escape key to stop.")
             elif self._data.appState == AppState.RECORDING_INPUT:
                 self._data.changeAppState(AppState.PROCESSING_INPUT)
                 self._logging.logInfo("Recording stopped. Processing input...")

@@ -11,7 +11,6 @@ from log import Logging
 from models import AppState
 from scipy.io.wavfile import write
 from faster_whisper import WhisperModel
-from util import cleanOutputText
 from threading import Thread
 
 
@@ -76,5 +75,6 @@ class Audio:
 
     def playAudio(self, text):
         os.system(
-            f"say -v {self._config.LOCAL_TTS_VOICE} -r {self._config.LOCAL_TTS_RATE} " + cleanOutputText(text)
+            f"say -v {self._config.LOCAL_TTS_VOICE} -r {self._config.LOCAL_TTS_RATE} "
+            + (text)
         )
