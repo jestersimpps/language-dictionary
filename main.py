@@ -27,14 +27,15 @@ class Main:
         self._logging = logging
         # Log info
         self._logging.logInfo(f"Press the Escape key to start recording")
-        self._audio.playAudio(f"Hi, let's start")
-
+        self._audio.playAudio(self._config.WELCOME_MESSAGE)
 
     def _onEscPress(self, event):
         if event.name == "esc" or event.name == "escape":
             if self._data.appState == AppState.WAITING_FOR_INPUT:
                 self._data.changeAppState(AppState.RECORDING_INPUT)
-                self._logging.logInfo("Recording started. Press the escape key to stop.")
+                self._logging.logInfo(
+                    "Recording started. Press the escape key to stop."
+                )
             elif self._data.appState == AppState.RECORDING_INPUT:
                 self._data.changeAppState(AppState.PROCESSING_INPUT)
                 self._logging.logInfo("Recording stopped. Processing input...")

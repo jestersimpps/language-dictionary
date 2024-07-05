@@ -48,14 +48,15 @@ class Llm:
 
             try:
                 parsed_content = json.loads(llmResponse)
-                english = parsed_content.get("prompt", "")
-                chinese = parsed_content.get("translation", "")
-                pinyin = parsed_content.get("pinyin", "")
-                notes = parsed_content.get("notes", "")
+                prompText = parsed_content.get("prompt", "")
+                translation = parsed_content.get("translation", "")
+                gender = parsed_content.get("gender", "")
+                root = parsed_content.get("root", "")
+                example = parsed_content.get("example", "")
 
-                if chinese:
-                    self._audio.playAudio(chinese)
-                    self._data.addTranslation(english, chinese, pinyin, notes)
+                if translation:
+                    self._audio.playAudio(translation)
+                    self._data.addTranslation(prompText, translation, gender, root, example)
                 else:
                     print("Translation not found in the response.")
             except json.JSONDecodeError:
@@ -67,13 +68,14 @@ class Llm:
                     json_content = llmResponse[start : end + 1]
                     try:
                         parsed_content = json.loads(json_content)
-                        english = parsed_content.get("prompt", "")
-                        chinese = parsed_content.get("translation", "")
-                        pinyin = parsed_content.get("pinyin", "")
-                        notes = parsed_content.get("notes", "")
-                        if chinese:
-                            self._audio.playAudio(chinese)
-                            self._data.addTranslation(english, chinese, pinyin, notes)
+                        prompText = parsed_content.get("prompt", "")
+                        translation = parsed_content.get("translation", "")
+                        gender = parsed_content.get("gender", "")
+                        root = parsed_content.get("root", "")
+                        example = parsed_content.get("example", "")
+                        if translation:
+                            self._audio.playAudio(translation)
+                            self._data.addTranslation(prompText, translation, gender, root, example)
                         else:
                             print("Translation not found in the extracted JSON.")
                     except json.JSONDecodeError:
