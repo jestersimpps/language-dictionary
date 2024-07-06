@@ -1,5 +1,5 @@
-import gspread  # type: ignore
-from google.oauth2.service_account import Credentials  # type: ignore
+import gspread # type: ignore
+from google.oauth2.service_account import Credentials # type: ignore
 from typing import List, Dict
 
 

@@ -27,7 +27,7 @@ class Main:
         self._logging = logging
         # Log info
         self._logging.logInfo(f"Press the Escape key to start recording")
-        self._audio.playAudio(f"Hi, let's start")
+        self._audio.playInputAudio(f"Hi, let's start")
 
 
     def _onEscPress(self, event):

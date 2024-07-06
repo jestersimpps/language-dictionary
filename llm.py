@@ -5,11 +5,9 @@ from config import Config
 from data import Data
 from gsheet import TranslationSpreadsheet
 from log import Logging
-from models import Entity
-import json
 from typing import List, Any
 from openai import OpenAI  # type: ignore
-
+import json
 
 @inject
 class Llm:
@@ -82,7 +80,7 @@ class Llm:
                 notes = parsed_content.get("notes", "")
 
                 if chinese:
-                    self._audio.playAudio(chinese)
+                    self._audio.playInputAudio(chinese)
                     self._gsheet.add_translation(english, chinese, pinyin, notes)
                 else:
                     print("Translation not found in the response.")
@@ -100,7 +98,7 @@ class Llm:
                         pinyin = parsed_content.get("pinyin", "")
                         notes = parsed_content.get("notes", "")
                         if chinese:
-                            self._audio.playAudio(chinese)
+                            self._audio.playOutputAudio(chinese)
                             self._data.addTranslation(english, chinese, pinyin, notes)
                         else:
                             print("Translation not found in the extracted JSON.")

@@ -3,6 +3,8 @@ import numpy as np
 import time
 import tempfile
 import os
+import subprocess
+import shlex
 
 from kink import inject
 from config import Config
@@ -73,7 +75,16 @@ class Audio:
         finally:
             os.remove(tempFilePath)
 
-    def playAudio(self, text):
-        os.system(
-            f"say -v {self._config.LOCAL_TTS_INPUT_VOICE} -r {self._config.LOCAL_TTS_INPUT_RATE} {text}"
+    def playInputAudio(self, text):
+        command = (
+            f"say -v {shlex.quote(self._config.LOCAL_TTS_INPUT_VOICE)} "
+            f"-r {self._config.LOCAL_TTS_INPUT_RATE} {shlex.quote(text)}"
         )
+        subprocess.run(command, shell=True, check=True)
+        
+    def playOutputAudio(self, text):
+        command = (
+            f"say -v {shlex.quote(self._config.LOCAL_TTS_OUTPUT_VOICE)} "
+            f"-r {self._config.LOCAL_TTS_OUTPUT_RATE} {shlex.quote(text)}"
+        )
+        subprocess.run(command, shell=True, check=True)
