@@ -13,3 +13,4 @@ google-auth
 google-auth-oauthlib
 openai
 python-dotenv
+inquirer
