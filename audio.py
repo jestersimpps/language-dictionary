@@ -75,6 +75,5 @@ class Audio:
 
     def playAudio(self, text):
         os.system(
-            f"say -v {self._config.LOCAL_TTS_VOICE} -r {self._config.LOCAL_TTS_RATE} "
-            + (text)
+            f"say -v {self._config.LOCAL_TTS_INPUT_VOICE} -r {self._config.LOCAL_TTS_INPUT_RATE} {text}"
         )

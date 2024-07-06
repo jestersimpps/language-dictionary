@@ -1,5 +1,5 @@
-import gspread # type: ignore
-from google.oauth2.service_account import Credentials # type: ignore
+import gspread  # type: ignore
+from google.oauth2.service_account import Credentials  # type: ignore
 from typing import List, Dict
 
 
@@ -22,7 +22,9 @@ class TranslationSpreadsheet:
 
         # Set up headers if the sheet is empty
         last_row = self.get_last_row()
-        print(f"Spreadsheet file: https://docs.google.com/spreadsheets/d/{self.sheet.spreadsheet.id}/edit?gid=0#gid=0")
+        print(
+            f"Spreadsheet file: https://docs.google.com/spreadsheets/d/{self.sheet.spreadsheet.id}/edit?gid=0#gid=0"
+        )
         print(f"Spreadsheet ID: {self.sheet.spreadsheet.id}")
         print(f"Dictionary rows: {last_row}")
         # print(f"Data: {self.get_translations()}")

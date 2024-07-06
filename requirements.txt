@@ -11,3 +11,4 @@ kink
 gspread
 google-auth
 google-auth-oauthlib
+openai

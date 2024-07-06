@@ -78,9 +78,9 @@ logging = Logging()
 gsheet = TranslationSpreadsheet(
     config.GOOGLE_CREDS_FILE, config.GOOGLE_SHEET_ID, config.GOOGLE_EMAIL_ADDRESS
 )
-data = Data(config, gsheet)
+data = Data(config)
 audio = Audio(config, data, logging)
-llm = Llm(config, data, logging, audio)
+llm = Llm(config, data, logging, audio, gsheet)
 main = Main(config, audio, llm, data, logging)
 
 main.run()

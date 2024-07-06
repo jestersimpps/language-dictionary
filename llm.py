@@ -3,30 +3,58 @@ from langchain_community.llms import Ollama
 from audio import Audio
 from config import Config
 from data import Data
+from gsheet import TranslationSpreadsheet
 from log import Logging
 from models import Entity
 import json
 from typing import List, Any
+from openai import OpenAI  # type: ignore
+
 
 @inject
 class Llm:
-    def __init__(self, config: Config, data: Data, logging: Logging, audio: Audio):
+    def __init__(
+        self,
+        config: Config,
+        data: Data,
+        logging: Logging,
+        audio: Audio,
+        gsheet: TranslationSpreadsheet,
+    ):
         self._config = config
         self._data = data
         self._logging = logging
         self._audio = audio
+        self._gsheet = gsheet
 
         if config.OFFLINE:
             self._llm = Ollama(model=config.LOCAL_OLLAMA_LLM)
         else:
-            # We will include cloud based LLMs here in the future
-            pass
+            self._llm = OpenAI(api_key=config.OPENAI_API_KEY)
 
     @staticmethod
     def extract_text_from_generations(generations: List[List[Any]]) -> str:
         if generations and generations[0] and generations[0][0].text:
             return generations[0][0].text
         return ""
+
+    def generate_response(self, prompt_text):
+        try:
+            if self._config.OFFLINE:
+                llmResult = self._llm.generate([prompt_text])
+                return self.extract_text_from_generations(llmResult.generations)
+
+            else:
+                response = self._llm.chat.completions.create(
+                    model="gpt-3.5-turbo",
+                    messages=[{"role": "user", "content": prompt_text}],
+                )
+
+                return response.choices[0].message.content.strip()
+
+        except Exception as e:
+            print(f"Error during LLM response generation: {str(e)}")
+            return None
 
     def processResponse(self, prompt: str) -> str:
         prompt = prompt.strip()
@@ -41,8 +69,8 @@ class Llm:
             prompt_text = self._config.create_instructions(
                 self._config.INPUT_LANGUAGE, self._config.OUTPUT_LANGUAGE, prompt
             )
-            llmResult = self._llm.generate([prompt_text])
-            llmResponse = self.extract_text_from_generations(llmResult.generations)
+
+            llmResponse = self.generate_response(prompt_text)
 
             self._logging.logLlm(llmResponse)
 
@@ -55,7 +83,7 @@ class Llm:
 
                 if chinese:
                     self._audio.playAudio(chinese)
-                    self._data.addTranslation(english, chinese, pinyin, notes)
+                    self._gsheet.add_translation(english, chinese, pinyin, notes)
                 else:
                     print("Translation not found in the response.")
             except json.JSONDecodeError:
