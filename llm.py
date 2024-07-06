@@ -75,13 +75,13 @@ class Llm:
             try:
                 parsed_content = json.loads(llmResponse)
                 english = parsed_content.get("prompt", "")
-                chinese = parsed_content.get("translation", "")
+                translation = parsed_content.get("translation", "")
                 pinyin = parsed_content.get("pinyin", "")
                 notes = parsed_content.get("notes", "")
 
-                if chinese:
-                    self._audio.playInputAudio(chinese)
-                    self._gsheet.add_translation(english, chinese, pinyin, notes)
+                if translation:
+                    self._audio.playOutputAudio(translation)
+                    self._gsheet.add_translation(english, translation, pinyin, notes)
                 else:
                     print("Translation not found in the response.")
             except json.JSONDecodeError:
@@ -94,12 +94,12 @@ class Llm:
                     try:
                         parsed_content = json.loads(json_content)
                         english = parsed_content.get("prompt", "")
-                        chinese = parsed_content.get("translation", "")
+                        translation = parsed_content.get("translation", "")
                         pinyin = parsed_content.get("pinyin", "")
                         notes = parsed_content.get("notes", "")
-                        if chinese:
-                            self._audio.playOutputAudio(chinese)
-                            self._data.addTranslation(english, chinese, pinyin, notes)
+                        if translation:
+                            self._audio.playOutputAudio(translation)
+                            self._data.addTranslation(english, translation, pinyin, notes)
                         else:
                             print("Translation not found in the extracted JSON.")
                     except json.JSONDecodeError:

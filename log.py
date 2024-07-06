@@ -16,10 +16,7 @@ class Logging:
         print(Fore.LIGHTRED_EX + message + Style.RESET_ALL)
 
     def logUser(self, message: str):
-        print("")
         print(Fore.CYAN + message + Style.RESET_ALL)
-        print("")
-
 
     def logLlm(self, message: str):
         print(Fore.GREEN + message + Style.RESET_ALL, end="", flush=True)

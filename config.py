@@ -19,33 +19,35 @@ class Config:
         Give me the translation of the following: "{prompt}" in {output_language}. 
         Below are examples of possible responses in the format I want you to respond in:
         
-        {{ 
-        "prompt": "Calculator", 
-        "translation": "计算器", 
+        {{
+        "prompt": "Calculator",
+        "translation": "计算器",
         "pinyin": "jìsuànqì",
-        "notes": "calculator as in a device, not a person"
+        "notes": "计 (jì): to calculate; 算 (suàn): to compute; 器 (qì): device/tool"
         }}
-        
-        {{ 
-        "prompt": "House", 
-        "translation": "房子", 
+
+        {{
+        "prompt": "House",
+        "translation": "房子",
         "pinyin": "fángzi",
-        "notes": "house as in a building, not a family"
+        "notes": "房 (fáng): house/room; 子 (zi): noun suffix"
         }}
-        
+
         {{
         "prompt": "Train",
         "translation": "火车或教练",
         "pinyin": "huǒchē huò jiàoliàn",
-        "notes": "train as in a vehicle or a teacher"
+        "notes": "火 (huǒ): fire; 车 (chē): vehicle; 或 (huò): or; 教 (jiào): teach; 练 (liàn): practice/train"
         }}
-        
+
         {{
         "prompt": "I am tired",
         "translation": "我很疲勒",
         "pinyin": "wǒ hěn pí lè",
-        "notes": "I am tired, in this context, translates directly to '我很疲勒'."
+        "notes": "我 (wǒ): I/me; 很 (hěn): very; 疲 (pí): tired; 勒 (lè): tired/weary"
         }}
+
+
         """
         return INSTRUCTIONS
 
@@ -53,8 +55,8 @@ class Config:
     LOCAL_TTS_INPUT_VOICE = "com.apple.speech.synthesis.voice.joelle"
     LOCAL_TTS_INPUT_RATE = 160
 
-    LOCAL_TTS_OUTPUT_VOICE = "com.apple.speech.synthesis.voice.meijia"
-    LOCAL_TTS_OUTPUT_RATE = 160
+    LOCAL_TTS_OUTPUT_VOICE = "com.apple.speech.synthesis.voice.tingting"
+    LOCAL_TTS_OUTPUT_RATE = 60
 
     # LLM
     LOCAL_OLLAMA_LLM = "phi3"

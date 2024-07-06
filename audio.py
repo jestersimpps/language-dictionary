@@ -75,16 +75,24 @@ class Audio:
         finally:
             os.remove(tempFilePath)
 
-    def playInputAudio(self, text):
+
+    def playOutputAudio(self, text, rate=None):
+        # Use the passed rate if provided, otherwise use the default from config
+        output_rate = rate if rate is not None else self._config.LOCAL_TTS_OUTPUT_RATE
+        
         command = (
-            f"say -v {shlex.quote(self._config.LOCAL_TTS_INPUT_VOICE)} "
-            f"-r {self._config.LOCAL_TTS_INPUT_RATE} {shlex.quote(text)}"
+            f"say -v {shlex.quote(self._config.LOCAL_TTS_OUTPUT_VOICE)} "
+            f"-r {output_rate} {shlex.quote(text)}"
         )
         subprocess.run(command, shell=True, check=True)
         
-    def playOutputAudio(self, text):
+    def playInputAudio(self, text, rate=None):
+        # Use the passed rate if provided, otherwise use the default from config
+        input_rate = rate if rate is not None else self._config.LOCAL_TTS_INPUT_RATE
+        
         command = (
-            f"say -v {shlex.quote(self._config.LOCAL_TTS_OUTPUT_VOICE)} "
-            f"-r {self._config.LOCAL_TTS_OUTPUT_RATE} {shlex.quote(text)}"
+            f"say -v {shlex.quote(self._config.LOCAL_TTS_INPUT_VOICE)} "
+            f"-r {input_rate} {shlex.quote(text)}"
         )
         subprocess.run(command, shell=True, check=True)
+

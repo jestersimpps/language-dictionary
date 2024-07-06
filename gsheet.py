@@ -31,7 +31,7 @@ class TranslationSpreadsheet:
 
         if last_row == 0:
             try:
-                self.sheet.append_row(["English", "Chinese", "Pinyin", "Notes"])
+                self.sheet.append_row(["Prompt", "Translation", "Pinyin", "Notes"])
                 spreadsheet = self.sheet.spreadsheet
                 spreadsheet.share(gmail, perm_type="user", role="writer")
                 print("Sheet initiated successfully")
@@ -44,10 +44,10 @@ class TranslationSpreadsheet:
         )  # Get all non-empty values in first column
         return len(str_list)
 
-    def add_translation(self, english: str, chinese: str, pinyin: str, notes: str = ""):
+    def add_translation(self, prompt: str, translation: str, pinyin: str, notes: str = ""):
         print("")
         try:
-            self.sheet.append_row([english, chinese, pinyin, notes])
+            self.sheet.append_row([prompt, translation, pinyin, notes])
             print("Row added successfully")
         except Exception as e:
             print(f"Error adding row: {str(e)}")
@@ -65,19 +65,19 @@ class TranslationSpreadsheet:
         return translations
 
     def update_translation(
-        self, english: str, chinese: str, pinyin: str, notes: str = ""
+        self, prompt: str, translation: str, pinyin: str, notes: str = ""
     ):
-        cell = self.sheet.find(english)
+        cell = self.sheet.find(prompt)
         if cell:
-            self.sheet.update_cell(cell.row, 2, chinese)
+            self.sheet.update_cell(cell.row, 2, translation)
             self.sheet.update_cell(cell.row, 3, pinyin)
             self.sheet.update_cell(cell.row, 4, notes)
         else:
-            self.add_translation(english, chinese, pinyin, notes)
+            self.add_translation(prompt, translation, pinyin, notes)
 
-    def delete_translation(self, english: str):
-        cell = self.sheet.find(english)
+    def delete_translation(self, prompt: str):
+        cell = self.sheet.find(prompt)
         if cell:
             self.sheet.delete_rows(cell.row)
         else:
-            print(f"Translation for '{english}' not found.")
+            print(f"Translation for '{prompt}' not found.")
