@@ -13,7 +13,7 @@ class Config:
     INPUT_LANGUAGE = "english"
     OUTPUT_LANGUAGE = "chinese"
 
-    def create_instructions(self, input_language, output_language, prompt):
+    def create_dictionary_instructions(self, input_language, output_language, prompt):
         INSTRUCTIONS = f"""
         You are an {input_language} to {output_language} translator. 
         Give me the translation of the following: "{prompt}" in {output_language}. 
@@ -46,24 +46,36 @@ class Config:
         "pinyin": "wǒ hěn pí lè",
         "notes": "我 (wǒ): I/me; 很 (hěn): very; 疲 (pí): tired; 勒 (lè): tired/weary"
         }}
-
-
         """
         return INSTRUCTIONS
 
-    # TTS
+    # def create_dictionary_instructions(self, translation, transcribedUserInput):
+    #     INSTRUCTIONS = f"""
+    #     would you be able to understand someone "{transcribedUserInput}" 
+    #     if you are a native chinese speaker
+    #     and they meant "{translation}"
+
+    #     """
+    #     return INSTRUCTIONS
+    # LOCAL TTS
     LOCAL_TTS_INPUT_VOICE = "com.apple.speech.synthesis.voice.joelle"
     LOCAL_TTS_INPUT_RATE = 160
 
     LOCAL_TTS_OUTPUT_VOICE = "com.apple.speech.synthesis.voice.tingting"
     LOCAL_TTS_OUTPUT_RATE = 60
 
-    # LLM
+    # LOCAL LLM
     LOCAL_OLLAMA_LLM = "phi3"
     OFFLINE = False
 
     # OPEN AI
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    
+    # ELEVENLABS TTS
+    ELEVENLABS_API_KEY= os.getenv("ELEVENLABS_API_KEY")
+    ELEVENLABS_INPUT_VOICE = "RPdRfxxQOaNxn1LtRQqm"
+    ELEVENLABS_OUTPUT_VOICE = "ByhETIclHirOlWnWKhHc"
+    ELEVENLABS_MODEL = "eleven_turbo_v2"
 
     # Google Sheet
     GOOGLE_SHEET_ID = os.getenv("GOOGLE_SHEET_ID")

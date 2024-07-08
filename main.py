@@ -13,26 +13,26 @@ def main():
     while True:
         questions = [
             inquirer.List(
-                "todo",
-                message="Welcome to language tools! Select a option:",
+                "mode",
+                message="Welcome to language tools! Select an option",
                 choices=["add to dictionary", "interrogate", "quit"],
             ),
         ]
 
         answers = inquirer.prompt(questions)
-        selected_answer = answers["todo"]
-        
-        
-        
+        selected_answer = answers["mode"]
+
         if selected_answer == "quit":
             print("Exiting the program.")
             break
-          
+
         if selected_answer == "add to dictionary":
             config = Config()
             logging = Logging()
             gsheet = TranslationSpreadsheet(
-                config.GOOGLE_CREDS_FILE, config.GOOGLE_SHEET_ID, config.GOOGLE_EMAIL_ADDRESS
+                config.GOOGLE_CREDS_FILE,
+                config.GOOGLE_SHEET_ID,
+                config.GOOGLE_EMAIL_ADDRESS,
             )
             data = Data(config)
             audio = Audio(config, data, logging)
@@ -40,19 +40,20 @@ def main():
             dictionaryInput = DictionaryInput(config, audio, llm, data, logging)
             dictionaryInput.run()
             break
-          
+
         if selected_answer == "interrogate":
             config = Config()
             data = Data(config)
             logging = Logging()
             audio = Audio(config, data, logging)
             gsheet = TranslationSpreadsheet(
-                config.GOOGLE_CREDS_FILE, config.GOOGLE_SHEET_ID, config.GOOGLE_EMAIL_ADDRESS
+                config.GOOGLE_CREDS_FILE,
+                config.GOOGLE_SHEET_ID,
+                config.GOOGLE_EMAIL_ADDRESS,
             )
-            interrogation = Interrogation(gsheet, audio, logging)
+            interrogation = Interrogation(gsheet, audio, logging, data)
             interrogation.run()
             break
-
 
 
 main()

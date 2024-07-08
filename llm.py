@@ -9,6 +9,7 @@ from typing import List, Any
 from openai import OpenAI  # type: ignore
 import json
 
+
 @inject
 class Llm:
     def __init__(
@@ -35,6 +36,22 @@ class Llm:
         if generations and generations[0] and generations[0][0].text:
             return generations[0][0].text
         return ""
+
+    # def checkTranslation(self, prompt: str):
+    #     prompt = prompt.strip()
+
+    #     if not prompt:
+    #         self._logging.logInfo("Received empty input, skipping...")
+    #         return
+    #     try:
+    #         print("")
+    #         prompt_text = self._config.create_dictionary_instructions(
+    #             self._config.INPUT_LANGUAGE, self._config.OUTPUT_LANGUAGE, prompt
+    #         )
+    #         llmResponse = self.generate_response(prompt_text)
+    #         self._logging.logLlm(llmResponse)
+    #     except Exception as e:
+    #         self._logging.logError(f"Error during LLM response: {e}")
 
     def generate_response(self, prompt_text):
         try:
@@ -64,7 +81,7 @@ class Llm:
         try:
             print("")
 
-            prompt_text = self._config.create_instructions(
+            prompt_text = self._config.create_dictionary_instructions(
                 self._config.INPUT_LANGUAGE, self._config.OUTPUT_LANGUAGE, prompt
             )
 
@@ -99,7 +116,9 @@ class Llm:
                         notes = parsed_content.get("notes", "")
                         if translation:
                             self._audio.playOutputAudio(translation)
-                            self._data.addTranslation(english, translation, pinyin, notes)
+                            self._data.addTranslation(
+                                english, translation, pinyin, notes
+                            )
                         else:
                             print("Translation not found in the extracted JSON.")
                     except json.JSONDecodeError:
@@ -112,4 +131,3 @@ class Llm:
         except Exception as e:
             self._logging.logError(f"Error during LLM response: {e}")
 
-        return llmResponse
